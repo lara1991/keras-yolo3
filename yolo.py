@@ -20,9 +20,9 @@ from tensorflow.python.keras.utils.multi_gpu_utils import multi_gpu_model
 
 class YOLO(object):
     _defaults = {
-        "model_path": 'model_data/yolo.h5',
+        "model_path": "/content/gdrive/MyDrive/yolo_test_/logs/trained_weights_final.h5",
         "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/coco_classes.txt',
+        "classes_path": "/content/gdrive/MyDrive/yolo_test_/yolo_classes.txt",
         "score" : 0.3,
         "iou" : 0.45,
         "model_image_size" : (416, 416),
