@@ -6,7 +6,7 @@ import numpy as np
 import keras.backend as K
 from keras.layers import Input, Lambda
 from keras.models import Model
-from keras.optimizers import Adam
+from keras.optimizers import adam_v2
 from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, EarlyStopping
 
 from yolo3.model import preprocess_true_boxes, yolo_body, tiny_yolo_body, yolo_loss
@@ -50,7 +50,7 @@ def _main():
     # Train with frozen layers first, to get a stable loss.
     # Adjust num epochs to your dataset. This step is enough to obtain a not bad model.
     if True:
-        model.compile(optimizer=Adam(lr=1e-3), loss={
+        model.compile(optimizer=adam_v2.Adam(lr=1e-3), loss={
             # use custom yolo_loss Lambda layer.
             'yolo_loss': lambda y_true, y_pred: y_pred})
 
@@ -70,7 +70,7 @@ def _main():
     if True:
         for i in range(len(model.layers)):
             model.layers[i].trainable = True
-        model.compile(optimizer=Adam(lr=1e-4), loss={'yolo_loss': lambda y_true, y_pred: y_pred}) # recompile to apply the change
+        model.compile(optimizer=adam_v2.Adam(lr=1e-4), loss={'yolo_loss': lambda y_true, y_pred: y_pred}) # recompile to apply the change
         print('Unfreeze all of the layers.')
 
         batch_size = 2 # note that more GPU memory is required after unfreezing the body
