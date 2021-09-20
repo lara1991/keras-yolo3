@@ -23,10 +23,10 @@ class YOLO(object):
         "model_path": "/content/gdrive/MyDrive/yolo_test_/logs/trained_weights_final.h5",
         "anchors_path": 'model_data/yolo_anchors.txt',
         "classes_path": "/content/gdrive/MyDrive/yolo_test_/yolo_classes.txt",
-        "score" : 0.3,
-        "iou" : 0.45,
+        "score" : 0.1,
+        "iou" : 0.1,
         "model_image_size" : (416, 416),
-        "gpu_num" : 1,
+        "gpu_num" : 0,
     }
 
     @classmethod
