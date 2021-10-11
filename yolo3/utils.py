@@ -33,10 +33,31 @@ def letterbox_image(image, size):
 def rand(a=0, b=1):
     return np.random.rand()*(b-a) + a
 
+## function to load the image mask and apply mask
+def read_mask(image_path):
+    img_path_split = image_path.split("/")
+    mask_dir = img_path_split[-2] + "_mask"
+    mask_name = img_path_split[-1]
+    mask_path_base = '/'.join(img_path_split[:-2])
+    mask_path = mask_path_base + "/" + mask_dir + "/" + mask_name
+
+    mask = cv2.imread(mask_path,0)
+    _, mask = cv2.threshold(mask, 0.1, 255., cv2.THRESH_BINARY)
+    return mask
+
+def image_with_mask(image,mask):
+    return cv2.bitwise_and(image,image,mask=mask)
+
 def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5, proc_img=True):
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
     image = Image.open(line[0])
+    
+    ## load the image mask and apply masking
+    mask = read_mask(line[0])
+    image = image_with_mask(image,mask)
+    
+    # continue the original program
     iw, ih = image.size
     h, w = input_shape
     box = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:]])
