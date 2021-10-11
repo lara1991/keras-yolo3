@@ -55,8 +55,16 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
     image = Image.open(line[0])
     
     ## load the image mask and apply masking
+    image = image.convert("RGB")
+    image = image[:,:,::-1] # RGB to BGR
+    image = np.array(image)
+    
     mask = read_mask(line[0])
     image = image_with_mask(image,mask)
+    
+    # convert back to pil image
+    image = image[:, :, ::-1]  # BGR to RGB  
+    image = Image.fromarray(image)
     
     # continue the original program
     iw, ih = image.size
