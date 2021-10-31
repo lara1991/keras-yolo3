@@ -52,7 +52,7 @@ def image_with_mask(image,mask):
 def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5, proc_img=True, img_mask = False):
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
-    print("line: {}".format(line))
+#     print("line: {}".format(line))
     image = Image.open(line[0])
     
     ## load the image mask and apply masking : only if required the mask
