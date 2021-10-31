@@ -49,24 +49,25 @@ def read_mask(image_path):
 def image_with_mask(image,mask):
     return cv2.bitwise_and(image,image,mask=mask)
 
-def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5, proc_img=True):
+def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jitter=.3, hue=.1, sat=1.5, val=1.5, proc_img=True, img_mask = False):
     '''random preprocessing for real-time data augmentation'''
     line = annotation_line.split()
     image = Image.open(line[0])
     
-    ## load the image mask and apply masking
-    image = image.convert("RGB")
-  
-    image = np.array(image)
-    image = image[:,:,::-1] # RGB to BGR
-    
-    mask = read_mask(line[0])
-    image = image_with_mask(image,mask)
-    
-    # convert back to pil image
-    image = image[:, :, ::-1]  # BGR to RGB  
-    image = Image.fromarray(image)
-    
+    ## load the image mask and apply masking : only if required the mask
+    if apply_mask:
+        image = image.convert("RGB")
+
+        image = np.array(image)
+        image = image[:,:,::-1] # RGB to BGR
+
+        mask = read_mask(line[0])
+        image = image_with_mask(image,mask)
+
+        # convert back to pil image
+        image = image[:, :, ::-1]  # BGR to RGB  
+        image = Image.fromarray(image)
+
     # continue the original program
     iw, ih = image.size
     h, w = input_shape
