@@ -55,7 +55,7 @@ def get_random_data(annotation_line, input_shape, random=True, max_boxes=20, jit
     image = Image.open(line[0])
     
     ## load the image mask and apply masking : only if required the mask
-    if apply_mask:
+    if img_mask:
         image = image.convert("RGB")
 
         image = np.array(image)
